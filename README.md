@@ -193,7 +193,7 @@ Output fields must follow the structure defined in the filled version of the tem
 - All logic, structure, text, and templates for STEP7/STEP8 must be **strictly hardcoded**; no code inference, shortening, or text modification is allowed.
 
 [Data and Code Structure]
-- In step1_to_7 (4).py, the 75 evaluation cases are hardcoded in a dict list (e.g., STEP7_ROWS).
+- In step1_to_6.py, the 75 evaluation cases are hardcoded in a dict list (e.g., STEP7_ROWS).
     - Each dict contains: title_key, output_condition_all_met (as string), output_1_text, output_2_text, and metadata.
     - output_condition_all_met is always a string (e.g., "step6_selections.get('s2_2_sub_2a') == 'Changed' and ..."), to be evaluated at runtime using eval().
 - Each title_key (e.g., 's2_2', 'p7_14') defines one logical “page” (group); multiple cases may share a title_key.
@@ -229,6 +229,6 @@ Output fields must follow the structure defined in the filled version of the tem
 - If unclear, clarify before proceeding.
 
 [References]
-- step1_to_7 (4).py: full code and logic
+- step1_to_6.py: full code and logic
 - step7_data_refac.xlsx: all original conditions and output text
 - STEP8 Word/Excel/image: PDF layout and fields for strict matching
