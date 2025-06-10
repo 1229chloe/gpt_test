@@ -1,92 +1,83 @@
-📌\[Declaration]
-This specification defines the instruction set for Codex to generate a fully hardcoded implementation of step7 and step8. These steps must be executed directly after step6 without modifying any existing data structures, variables, or session keys used in step1\_to\_6.py.
+📌[Declaration]
+This specification defines the instruction set for Codex to generate a fully hardcoded implementation of step7, which must be executed directly after step6 without modifying any existing data structure, variable, or session key used in step1_to_6.py.
 
-The objective is to convert structured data, predefined conditional logic, and template field mappings into deterministic, fully hardcoded code blocks that require no user inference or external dependency.
+The goal is to convert structured data and interpreted condition logic into deterministic, fully hardcoded code blocks without introducing any new variables or logic outside the provided scope.
 
-This replaces and extends the original instruction, which was limited to implementing only step7. Codex is now required to fully implement both:
+The following reference files must be strictly used:
 
-* Step 7: Evaluation logic and visual output generation grouped by title\_key
-* Step 8: Final document rendering logic in PDF format based on official templates
+- `step7_data_refac.xlsx`:
+  Contains human-readable column values which describe conditions and expected outputs.  
+  These values (e.g., subitem_met, requirements_met, requirements_unmet) are not executable logic themselves but must be **interpreted into if-condition logic by Codex**, based on actual user responses from step6.
 
-The following reference files are mandatory and authoritative:
+- `step1_to_6.py`:
+  Defines the full implementation of steps 1 through 6 in Streamlit.
+  In particular, the structure of `step6_items` and the state keys used in `st.session_state.step6_selections` must be preserved and reused exactly. Step 7 and Step 8 code must be appended to this file rather than placed in a new file.
 
-* step7\_data\_refac.xlsx:
-  Contains finalized logic expressions and output text blocks for each condition. These expressions are ready-to-evaluate and must be inserted directly.
-
-* step1\_to\_6.py:
-  Defines all inputs and stored session values. Keys from step6 must be reused exactly.
-
-* step6\_used\_key\_info.csv:
-  Provides the list of valid keys used in step6. This is for verification only and must not be altered.
-
-* Step8 filled template reference (Excel/Word):
-  Contains the field-by-field layout and expected values for each section of the generated application. Codex must map outputs to this layout exactly as shown.
-
-[작업 전제]
-- 현재 step6까지의 모든 코드는 이미 사용자 의도와 완벽히 일치하므로, **step6 부분(입력, 선택값 저장, 변수구조 등)은 절대 수정하지 마세요.**
-- step6은 사용자 선택값을 st.session_state.step6_selections (dict)로 저장하고 있습니다.
-
-[작업 지시]
-- **step6 이후에 바로 이어지는 step7 및 step8 코드를 아래 명세에 따라 새롭게 작성**해주세요.
-- step7/step8은 위에서 제공된 상세작업지시서에 100% 일치하게, 모든 판단조건/출력/페이징/양식구조/예외처리까지 구현해주세요.
-    - step7: 75개 케이스를 하드코딩(if-elif, eval 등)으로, title_key별 그룹화·독립판단·병렬출력 방식
-    - step8: 공식양식(첨부 워드/엑셀/이미지)와 100% 일치하게 PDF 자동생성, 다운로드/인쇄기능 구현(수정불가)
-- step6의 변수명/구조/데이터 흐름을 반드시 그대로 연계하여, **사용자 입력값이 그대로 step7/step8로 반영**되어야 합니다.
-- step6 부분의 함수/로직/변수명/데이터 저장방식에는 어떤 형태의 변경도 절대 가하지 마세요.
-- step7/step8 코드는 step6 이후에 이어 붙여서 동작하게 구현합니다.
-
-[강조]
-- step6 코드를 **함수/로직/구조 일절 수정하지 않고**, 그 이후(step7, step8)만 작성합니다.
-- 기존 step6의 st.session_state.step6_selections 등 데이터구조를 정확히 활용하여 후속로직을 만드세요.
-
+- `step6_used_key_info.csv`:  
+  Lists the exact keys that were declared and used during step6 logic execution.  
+  Codex must use this list as the **only valid reference** for conditional key matching in step7. No derived, renamed, or inferred keys are allowed.
 
 Key instructions for Codex:
 
-* Step7 logic must evaluate each row in the dataset and apply exact if-condition matching using output\_condition\_all\_met.
-* Matching rows should generate structured output (output\_1\_text, output\_2\_text) grouped by title\_key.
-* Step8 must paginate one page per title\_key with results, populating each output field in strict alignment with the filled template.
-* All formatting, spacing, and expressions must be preserved 1:1. No summaries, abstractions, or derivations allowed.
+- All logic for step7 must derive from the provided condition values.  
+  Codex is responsible for transforming the values in `subitem_met`, `requirements_met`, and `requirements_unmet` into complete logical conditions (e.g., if A and B and not C…).
 
-This declaration overrides all prior instructions. Codex must treat this document as the binding task definition for full implementation of both step7 and step8.
+- A result is shown (from `result_1`, `result_2`, `result_1_tag`) **only if all listed conditions for that row are satisfied.**  
+  Otherwise, the default fallback message (as defined later in this spec) must be displayed.
 
+- The output text, formatting, and structure from the Excel cells must be preserved 1:1, including line breaks, markdown, numbering, or indentation.
+
+- No new logic, shortcuts, or abstractions are allowed.  
+  The implementation must be deterministic, explicit, and fully based on the instructions and resources above.
+
+This declaration precedes and governs all subsequent task instructions. Codex must treat this section as binding logic and not deviate from it.
 ────────────────────────────────────────────────────────────────────────────
-📌\[Purpose of This Specification]
-The purpose of this document is to instruct Codex to generate a fully hardcoded implementation of both step7 and step8 logic, fully aligned with the following constraints:
+📌[Purpose of This Specification]
+The purpose of this document is to instruct Codex to generate a hardcoded implementation of step7 logic that is fully aligned with:
 
-1. User selection state stored in st.session\_state.step6\_selections (as implemented in step1\_to\_6.py)
-2. Condition expressions and outputs explicitly defined in step7\_data\_refac.xlsx
-3. Key definitions validated exclusively through step6\_used\_key\_info.csv
-4. Output templates and form mappings based on the filled example provided for step8 layout
+1. The user selection states stored in `st.session_state.step6_selections` (as implemented in `step1_to_6.py`)
+2. The interpretable condition values provided in `step7_data_refac.xlsx`
+3. The exact key mapping declared in `step6_used_key_info.csv`
 
-In step7, Codex must evaluate prior step6 inputs and match them against prewritten conditional rules to determine whether a result should be displayed. This logic is deterministic and must be implemented through explicit condition evaluation from output\_condition\_all\_met. Grouping and pagination are based on title\_key, with results shown in full if any condition matches.
+Step7 must evaluate the user’s previous input (step6) and apply a matching logic to determine which predefined output (defined in the Excel) should be shown.
 
-In step8, Codex must use the results of step7 to populate a formal application document using an official government layout. One page per title\_key must be generated. The form must follow exact formatting, layout, field structure, and vocabulary as defined in the official template. All outputs must match the example values and formatting in the filled reference.
+Codex must treat this logic as fully deterministic:  
+every conditional rule is derived from structured inputs, and the output must follow only when all specified values in the row are satisfied.
 
-This specification provides the full authority for Codex to implement both step7 and step8 as an uninterrupted, fully hardcoded continuation of step6 logic without deviation or inference.
+This specification serves as the complete reference for Codex to implement step7 without additional assumptions, data, or dependencies.
 
 ──────────────────────────────────────── Step 7 Specification (Codex-ready) ────────────────────────────────────────
+NOTE – All identifiers, column names, and UI strings in Korean **must stay exactly as-is.**  
+This document contains **no executable code** – only the deterministic rules Codex must follow when it appends
+Step 7 and Step 8 logic after the existing `step1_to_6.py` file. Do not place this code in a new file.
 
-Step 7 must be implemented using a fully deterministic, hardcoded logic path. Codex is required to process all 75 individual evaluation cases from step7\_data\_refac.xlsx using explicit if-conditions derived from the column output\_condition\_all\_met. Each row represents one atomic decision rule. When the condition is satisfied, its associated outputs (output\_1\_text, output\_2\_text, output\_1\_tag) must be displayed.
+───────────────────────────── 1. Fixed Data Sources ─────────────────────────────
+EXCEL_FILE  :  `step7_data_refac.xlsx`
 
-Grouping:
+COLUMNS (exact order in the worksheet)  
+  `step`, `heading_text`, `title_key`, `title_text`,  
+  `subitem and requirements steat`, `output_condition_all_met`,  
+  `subitem_met`, `requirements_met`, `requirements_unmet`,  
+  `output_1_tag`, `output_1_text`, `output_2_text`
 
-* Each row is assigned to a group identified by title\_key.
-* Conditions must be evaluated independently but grouped together under their common title\_key.
-* If any condition within the group evaluates to True, its result must be shown alongside others on the same page.
-* If no results are triggered for that title\_key, a fallback message must be shown exactly once.
+───────────────────────────── 2. Objects Provided by Step 6 ─────────────────────
+`step6_targets`      → list[str]   # title_key values selected by the user, in display order  
+`step6_selections`   → dict        # key → "변경 있음" / "충족" / "미충족"  
+`step6_items`        → dict        # title_key → {"title": (str with line-breaks)}
 
-Page logic:
+───────────────────────────── 3. New Session Variables for Step 7 ───────────────
+`step7_page`    (int)   → current page index, 0-based  
+`step7_results` (dict)  → {title_key: [(output_1_tag, output_1_text, output_2_text), …]}
 
-* One page is rendered per title\_key value in step6\_targets.
-* Each page must display the subtitle (step6\_items\[title\_key]\["title"]) and all matched results.
-* Each output must be shown using full markdown rendering including line breaks, numbering, and formatting preserved from Excel.
+───────────────────────────── 4. Fixed UI Button Labels ────────────────────────
+"이전단계로"  (offset −1)  
+"다음단계로"  (offset +1)  
+"신청양식 확인하기"  (offset +1, shown only on the final page)
 
-Evaluation:
-
-* The expression in output\_condition\_all\_met must be evaluated exactly using Python’s eval():
-  eval(expression, {}, {"step6\_selections": step6\_selections})
-* No transformation or parsing of the logic string is allowed.
-
+───────────────────────────── 5. Deterministic Processing Rules ────────────────
+5-1  **Page construction**  
+     • One page per `title_key` in *step6_targets*.  
+     • `total_pages  = len(step6_targets)`  
 Examples:
 
 * If a condition states that step6\_selections.get("s2\_2\_req\_3") == "충족", and that condition is met, the corresponding output\_1\_text and output\_2\_text must be rendered in full.
