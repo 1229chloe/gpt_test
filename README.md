@@ -1,72 +1,243 @@
-# gpt_test
-하드코딩을 유지하여야 합니다. 
-STEP7에서, 현재 독립적으로 평가되는 75가지 케이스의 판단조건과 도출결과의 하드코딩된 부분을 
-title_key 단위로 묶어서 도출결과를 생성하도록 재구성해주세요. 
-이 내용 이외의 제안은 향후에 실시하겠으니 지금 요청드리는 작업에만 집중해주세요. 
+📌\[Declaration]
+This specification defines the instruction set for Codex to generate a fully hardcoded implementation of step7 and step8. These steps must be executed directly after step6 without modifying any existing data structures, variables, or session keys used in step1\_to\_6.py.
 
-title_key가 동일한 판단조건들끼리 그룹화 하였을 때 그 중 1가지 또는 7가지라도 도출결과가 있더라도, 도출결과가 존재하지 않을때 안내되는 안내문구가 출력되고 있습니다. STEP6까지의 코딩은 사용자의 의도대로 작동되며 문제가 없습니다. 수정하지 말아주세요. 
+The objective is to convert structured data, predefined conditional logic, and template field mappings into deterministic, fully hardcoded code blocks that require no user inference or external dependency.
 
-title_key가 동일한 판단조건의 케이스를 title_key의 하위단위로 각각 구성하고, 해당되는 각각의 케이스가 독립적으로 판단되어 결과를 도출하되, 생성된 결과를 title_key 단위별로 구성하는 단계를 설정해주세요. 
+This replaces and extends the original instruction, which was limited to implementing only step7. Codex is now required to fully implement both:
 
-[페이징 구성에 따라 각각 75가지 판단조건의 판단결과를 화면에 도출하는 방법] 
-각각의 75가지 판단조건은 독립적으로 판단결과를 저장하도록 설정하였습니다.
-다만, 페이징 원칙에 따라 title_key가 동일한 판단조건끼리 그룹화 하여 한 페이지 안에 결과가 도출합니다. 이때 화면에 도출되는 액션은 title_key가 동일한 판단조건들에서 각각 도출결과가 존재하는 경우 모든 도출결과를 병렬로 보여줍니다.
-그리고 title_key가 동일한 판단조건들끼리 그룹화 하였을 때 도출할 수 있는 결과가 존재하지 않는 경우 안내문구를 보여줍니다.
+* Step 7: Evaluation logic and visual output generation grouped by title\_key
+* Step 8: Final document rendering logic in PDF format based on official templates
 
-(중요) 상세한 예시를 통해 설명드리겠습니다 : ---
-title key 's2_2'와 관련되는 판단조건은 총 75가지 중 7가지 케이스에 해당합니다. 
-이 7가지 케이스는 독립적으로 판단됩니다.
+The following reference files are mandatory and authoritative:
 
-title key 's2_2'와 관련되는 판단조건 중 첫번째 등장하는 케이스의 판단조건은 ----'output_if_all_conditions_met = (tep6_selections.get(""s2_2_sub_2a"") == "변경 있음" and 
- step6_selections.get("s2_2_req_3" == "충족" and step6_selections.get("s2_2_req_4") == "충족" and step6_selections.get("s2_2_req_9") == "충족" and step6_selections.get("s2_2_req_1") == "미충족" and step6_selections.get("s2_2_req_2") == "미충족" and step6_selections.get("s2_2_req_5") == "미충족" and step6_selections.get("s2_2_req_6") == "미충족" and step6_selections.get("s2_2_req_7") == "미충족" and step6_selections.get("s2_2_req_8") == "미충족" and step6_selections.get("s2_ 2_req_10") == "미충족" ' 입니다. 
-이 조건문과 일치하는것이 저장된 step6 데이터에서 확인된다면 결과를 도출하기 위해 
-output_1_text 의 텍스트 내용 전체(서식, 줄바꿈, 내용 변경불가)와 output_2_text 의 텍스트 내용 전체를 출력할 수 있도록 저장합니다. 다만, 최종적으로 화면에 출력되는 구성과 형태는 별도로 정의되어 있습니다.
+* step7\_data\_refac.xlsx:
+  Contains finalized logic expressions and output text blocks for each condition. These expressions are ready-to-evaluate and must be inserted directly.
 
-output_1_text : 
-"보고유형은 다음과 같습니다. 
+* step1\_to\_6.py:
+  Defines all inputs and stored session values. Keys from step6 must be reused exactly.
 
-IR, 시판전보고 
-「의약품의 품목허가‧신고‧심사 규정」 제3조의2제4항 단서조항에 따른 시판전 보고(Immediate Report, IR) 수준의 변경사항입니다. "
+* step6\_used\_key\_info.csv:
+  Provides the list of valid keys used in step6. This is for verification only and must not be altered.
 
-output_2_text:
+* Step8 filled template reference (Excel/Word):
+  Contains the field-by-field layout and expected values for each section of the generated application. Codex must map outputs to this layout exactly as shown.
 
-"필요서류는 다음과 같습니다. 
+[작업 전제]
+- 현재 step6까지의 모든 코드는 이미 사용자 의도와 완벽히 일치하므로, **step6 부분(입력, 선택값 저장, 변수구조 등)은 절대 수정하지 마세요.**
+- step6은 사용자 선택값을 st.session_state.step6_selections (dict)로 저장하고 있습니다.
 
-1. (해당되는 경우) 해당 품목을 제조하는 제조소에 ‘의약품 등의 안전에 관한 규칙’ 제48조의2에 따른 제조 및 품질관리기준 적합판정서, 해외 제조원인 경우 제4조제1항제4호에 따른 유효기간 내의 제조증명서.
-2. (S.2.1) 제조소명, 주소, 책임부과범위 및 해당하는 경우 수탁업소에 관한 자료.
-4. 변경 전·후 제조소의 원료의약품, 중간체 또는 원료의약품 출발 물질 (해당되는 경우)제조 공정에 관한 자료.
-10. 변경 전·후 출발 물질 또는 중간체의 최소 1배치에 대한 시험 성적서(해당하는 경우), 출발물질 또는 중간체 변경 전·후 최종 원료의약품 2배치에 대한 배치분석 자료."
+[작업 지시]
+- **step6 이후에 바로 이어지는 step7 및 step8 코드를 아래 명세에 따라 새롭게 작성**해주세요.
+- step7/step8은 위에서 제공된 상세작업지시서에 100% 일치하게, 모든 판단조건/출력/페이징/양식구조/예외처리까지 구현해주세요.
+    - step7: 75개 케이스를 하드코딩(if-elif, eval 등)으로, title_key별 그룹화·독립판단·병렬출력 방식
+    - step8: 공식양식(첨부 워드/엑셀/이미지)와 100% 일치하게 PDF 자동생성, 다운로드/인쇄기능 구현(수정불가)
+- step6의 변수명/구조/데이터 흐름을 반드시 그대로 연계하여, **사용자 입력값이 그대로 step7/step8로 반영**되어야 합니다.
+- step6 부분의 함수/로직/변수명/데이터 저장방식에는 어떤 형태의 변경도 절대 가하지 마세요.
+- step7/step8 코드는 step6 이후에 이어 붙여서 동작하게 구현합니다.
 
-title key 's2_2'와 관련되는 판단조건 중 두번째 등장하는 케이스의 판단조건은 ----'output_if_all_conditions_met = step6_selections.get(""s2_2_sub_2a"") == "변경 있음" and step6_selections.get("s2_2_req_1") == "미충족" and step6_selections.get("s2_2_req_2") == "미충족" and step6_selections.get("s2_2_req_3") == "미충족" and step6_selections.get("s2_2_req_4") == "미충족" and step6_selections.get("s2_2_req_5") == "미충족" and step6_selections.get("s2_2_req_6") == "미충족" and step6_selections.get(" s2_2_req_7") == "미충족" and step6_selections.get("s2_2_req_8") == "미충족" and step6_selections.get("s2_2_req_9") == "미충족" and step6_selections.get("s2_2_req_10") == "미충족" '입니다. 
-이 조건문과 일치하는것이 저장된 step6 데이터에서 확인된다면 결과를 도출하기 위해 
-output_1_text 의 텍스트 내용 전체(서식, 줄바꿈, 내용 변경불가)와 output_2_text 의 텍스트 내용 전체를 출력할 수 있도록 저장합니다. 다만, 최종적으로 화면에 출력되는 구성과 형태는 별도로 정의되어 있습니다.
+[강조]
+- step6 코드를 **함수/로직/구조 일절 수정하지 않고**, 그 이후(step7, step8)만 작성합니다.
+- 기존 step6의 st.session_state.step6_selections 등 데이터구조를 정확히 활용하여 후속로직을 만드세요.
 
-output_1_text : 
-"보고유형은 다음과 같습니다. 
 
-Cmaj, 변경허가(신고)
-「의약품의 품목허가‧신고‧심사 규정」 제3조의2(의약품의 허가‧신고의 변경 처리) 및 제6조(국제공통기술문서 작성)에 따라 원료의약품과 완제의약품의 제조원 또는 제조방법 중 품질에 중요한 영향을 미치는 변경허가(신고) 신청(Change, C) 대상에 해당하며, 변경사항의 중요도, 충족조건 및 제출자료 요건의 난이도 등을 고려하였을 때 Major change(Cmaj)수준의 변경사항입니다."
+Key instructions for Codex:
 
-output_2_text:
+* Step7 logic must evaluate each row in the dataset and apply exact if-condition matching using output\_condition\_all\_met.
+* Matching rows should generate structured output (output\_1\_text, output\_2\_text) grouped by title\_key.
+* Step8 must paginate one page per title\_key with results, populating each output field in strict alignment with the filled template.
+* All formatting, spacing, and expressions must be preserved 1:1. No summaries, abstractions, or derivations allowed.
 
-"필요서류는 다음과 같습니다. 
+This declaration overrides all prior instructions. Codex must treat this document as the binding task definition for full implementation of both step7 and step8.
 
-1. (해당되는 경우) 해당 품목을 제조하는 제조소에 ‘의약품 등의 안전에 관한 규칙’ 제48조의2에 따른 제조 및 품질관리기준 적합판정서, 해외 제조원인 경우 제4조제1항제4호에 따른 유효기간 내의 제조증명서.
-2. (S.2.1) 제조소명, 주소, 책임부과범위 및 해당하는 경우 수탁업소에 관한 자료.
-3. (S.2.5) 무균원료의약품 생산의 경우 (위험도 평가 결과에 따른) 무균공정에 대한 공정밸리데이션 자료 및 평가 자료.
-4. 변경 전·후 제조소의 원료의약품, 중간체 또는 원료의약품 출발 물질 (해당되는 경우)제조 공정에 관한 자료.
-7. (S.4.1) 원료의약품 기준 및 시험방법에 관한 자료.
-10. 변경 전·후 출발 물질 또는 중간체의 최소 1배치에 대한 시험 성적서(해당하는 경우), 출발물질 또는 중간체 변경 전·후 최종 원료의약품 2배치에 대한 배치분석 자료.
-11. (S.7.2) 변경 후 원료의약품의 안정성 시험 필요성 고찰 및 필요한 경우 안정성 시험 이행 계획서."
+────────────────────────────────────────────────────────────────────────────
+📌\[Purpose of This Specification]
+The purpose of this document is to instruct Codex to generate a fully hardcoded implementation of both step7 and step8 logic, fully aligned with the following constraints:
 
-.......
+1. User selection state stored in st.session\_state.step6\_selections (as implemented in step1\_to\_6.py)
+2. Condition expressions and outputs explicitly defined in step7\_data\_refac.xlsx
+3. Key definitions validated exclusively through step6\_used\_key\_info.csv
+4. Output templates and form mappings based on the filled example provided for step8 layout
 
-이렇게 동일한 title_key를 가지는 7가지의 케이스가 존재할 것입니다.
-각 케이스마다 결과 도출 여부를 판단하여 결과를 도출하는지 저장합니다.
-STEP7은 title_key 단위로 한페이지씩 페이징되는 기능을 가지고 있습니다. 따라서, 한 페이지 안에 예시로 설명한 title_key 하위 7가지 케이스 중 결과를 도출할 수 있는 케이스의 각 결과를 병렬로 모두 출력합니다. 이 때 각 title_key에 매칭되는 텍스트가 소제목으로 도출됩니다. 
-다만, title_key 하위 7가지 케이스 중 단 한가지도 결과를 도출할 수 있는 케이스가 없는 경우에만 아래의 안내문구를 도출합니다. 
-"해당 변경사항에 대한 충족조건을 고려하였을 때, 「의약품 허가 후 제조방법 변경관리 가이드라인」에서 제시하고 있는 범위에 해당하지 않는 것으로 확인됩니다"
+In step7, Codex must evaluate prior step6 inputs and match them against prewritten conditional rules to determine whether a result should be displayed. This logic is deterministic and must be implemented through explicit condition evaluation from output\_condition\_all\_met. Grouping and pagination are based on title\_key, with results shown in full if any condition matches.
 
-위에 예시로 설명해드린 title_key 단위의 페이지 구성과 결과도출방식은 총 24개 title_key에 대해 적용됩니다. 
+In step8, Codex must use the results of step7 to populate a formal application document using an official government layout. One page per title\_key must be generated. The form must follow exact formatting, layout, field structure, and vocabulary as defined in the official template. All outputs must match the example values and formatting in the filled reference.
 
-현재 STREAMLIT에서 테스트 한 결과 커밋된 파일은 위의 조건에 따라 도출되지 않습니다.
+This specification provides the full authority for Codex to implement both step7 and step8 as an uninterrupted, fully hardcoded continuation of step6 logic without deviation or inference.
+
+──────────────────────────────────────── Step 7 Specification (Codex-ready) ────────────────────────────────────────
+
+Step 7 must be implemented using a fully deterministic, hardcoded logic path. Codex is required to process all 75 individual evaluation cases from step7\_data\_refac.xlsx using explicit if-conditions derived from the column output\_condition\_all\_met. Each row represents one atomic decision rule. When the condition is satisfied, its associated outputs (output\_1\_text, output\_2\_text, output\_1\_tag) must be displayed.
+
+Grouping:
+
+* Each row is assigned to a group identified by title\_key.
+* Conditions must be evaluated independently but grouped together under their common title\_key.
+* If any condition within the group evaluates to True, its result must be shown alongside others on the same page.
+* If no results are triggered for that title\_key, a fallback message must be shown exactly once.
+
+Page logic:
+
+* One page is rendered per title\_key value in step6\_targets.
+* Each page must display the subtitle (step6\_items\[title\_key]\["title"]) and all matched results.
+* Each output must be shown using full markdown rendering including line breaks, numbering, and formatting preserved from Excel.
+
+Evaluation:
+
+* The expression in output\_condition\_all\_met must be evaluated exactly using Python’s eval():
+  eval(expression, {}, {"step6\_selections": step6\_selections})
+* No transformation or parsing of the logic string is allowed.
+
+Examples:
+
+* If a condition states that step6\_selections.get("s2\_2\_req\_3") == "충족", and that condition is met, the corresponding output\_1\_text and output\_2\_text must be rendered in full.
+* Results are collected into step7\_results\[title\_key] = \[(tag, output1, output2), ...] for use in step8.
+
+The fallback message shown when no conditions match:
+해당 변경사항에 대한 충족조건을 고려하였을 때,
+「의약품 허가 후 제조방법 변경관리 가이드라인」에서 제시하고 있는
+범위에 해당하지 않는 것으로 확인됩니다
+
+⚠ All formatting and structure for matched outputs must follow exactly what is defined in the Excel rows. Do not paraphrase or simplify any string.
+
+Hardcoding must be preserved at all times.
+
+In STEP7, the 75 independently evaluated cases must be regrouped by title\_key and the results generated per title\_key grouping using fully hardcoded logic. Focus only on this task. Any additional enhancements will be considered later.
+
+Even if one or more of the grouped cases under a title\_key produces results, when none match, the fallback guidance message must be shown. Steps 1 to 6 are functioning correctly and must not be modified.
+
+Each individual case sharing the same title\_key must be evaluated independently, and their respective outputs collected under a common title\_key grouping.
+
+Rendering logic for each of the 75 condition cases according to paging rules:
+Each of the 75 condition cases must store their evaluation results independently.
+However, based on paging rules, conditions with the same title\_key are grouped into a single screen. If multiple conditions produce results, all outputs are displayed in parallel on the same page.
+If no condition under a given title\_key produces a result, then a fallback message must be shown.
+
+IMPORTANT: A detailed example is included at the end of this specification.
+
+This logic must be applied to all 24 defined title\_key groupings.
+
+──────────────────────────────────────── Step 8 Specification (Codex-ready) ────────────────────────────────────────
+
+Step 8 uses the results from step7 to auto-populate an official PDF application form following the exact template defined in step8\_양식.docx and step8프롬프트\_출력서식.docx.
+
+Page generation:
+
+* Each title\_key with any valid result from step7 must generate one full page.
+* Pages must repeat based on the number of title\_keys in step7\_results.
+
+Form population rules:
+
+* Section 1 (신청인): Leave blank.
+* Section 2 (변경유형): Use title\_text from the matched title\_key.
+* Section 3 (신청유형): Use the first line of output\_1\_text (e.g., “IR”, “Cmaj”, etc.).
+* Section 4 (충족조건): For each requirement from step6\_selections linked to that title\_key:
+
+  * List all keys used (e.g., s2\_2\_req\_1 \~ req\_10) with their literal prompt text.
+  * Next to each, show “○” if value is “충족”, “×” if “미충족”.
+* Section 5 (필요서류):
+
+  * From output\_2\_text, split by line breaks.
+  * For each line, enter in order and leave 구비여부 and page fields blank for manual input.
+
+Output format:
+
+* PDF must be generated with fixed layout matching the original Word template.
+* Fonts, spacing, cell widths, numbering, and line breaks must be identical.
+* File name: 신청양식\_{title\_key}\_{YYYYMMDD}.pdf
+* PDF must be read-only, non-editable.
+
+UI integration:
+
+* On Step 8 page, show preview of filled forms with two buttons: \[파일 다운로드하기], \[인쇄하기].
+* If no title\_keys yield a result, show only:
+  신청양식 자동생성 불가: 도출 결과 없음
+
+⚠ Codex must strictly follow the filled example layout and cannot infer field usage. Every label, cell value, and layout structure must match what is defined in the reference Excel and Word forms.
+
+Step 8 implements the final output document: a fully formatted, printable application form based on the official 의약품 허가 후 제조방법 변경관리 가이드라인 template.
+
+Purpose:
+
+* Convert all final outputs from step6/step7 into the fixed layout of the government application form.
+* Generate a read-only PDF using the official template, with data auto-filled from earlier steps.
+
+Key Features:
+
+* Each title\_key with valid results generates one full page of output (step8 pagination must follow title\_key).
+
+* Form is populated with:
+
+  * Section 2: Upper/mid/lower item from title\_text.
+  * Section 3: 보고유형 from output\_1\_text.
+  * Section 4: All condition keys from step6 shown with ○ (충족) or × (미충족).
+  * Section 5: Required documents (output\_2\_text), listed in full by line with their checkmark status left blank.
+
+* Section 1 (신청인), and any blank placeholders in the template, must remain empty for manual user input.
+
+UI Rules:
+
+* Dedicated page for form preview.
+* Two fixed buttons: \[파일 다운로드하기] and \[인쇄하기].
+* PDF must exactly match the font, spacing, layout, and phrasing of the attached Word/Template image.
+
+Repeat Generation:
+
+* Multiple title\_key results → repeat template on new pages.
+* No valid results → print default page with message: 신청양식 자동생성 불가: 도출 결과 없음.
+
+PDF Output:
+
+* File name format: 신청양식\_{title\_key}\_{YYYYMMDD}.pdf.
+* Must be read-only and uneditable.
+
+⚠ All formatting, order, spacing, and phrasing must match the official template precisely.
+
+Codex must render step8 only after all step7 results are finalized, using step7\_results as the sole data source.
+
+Output fields must follow the structure defined in the filled version of the template Excel provided. Codex must extract the field mappings directly from the filled template structure and not infer or omit any logic.
+
+[Project Purpose]
+- This project is for the automatic generation of regulatory application forms (according to the “Guidelines for Managing Post-Approval Changes in Manufacturing Methods”)—specifically, the hardcoded implementation of STEP7 and STEP8.
+- Users proceed through STEP6, making selections (Fulfilled/Not fulfilled, etc.), which are saved in st.session_state.step6_selections as a dict.
+- All logic, structure, text, and templates for STEP7/STEP8 must be **strictly hardcoded**; no code inference, shortening, or text modification is allowed.
+
+[Data and Code Structure]
+- In step1_to_7 (4).py, the 75 evaluation cases are hardcoded in a dict list (e.g., STEP7_ROWS).
+    - Each dict contains: title_key, output_condition_all_met (as string), output_1_text, output_2_text, and metadata.
+    - output_condition_all_met is always a string (e.g., "step6_selections.get('s2_2_sub_2a') == 'Changed' and ..."), to be evaluated at runtime using eval().
+- Each title_key (e.g., 's2_2', 'p7_14') defines one logical “page” (group); multiple cases may share a title_key.
+
+[STEP7 Details: Independent Evaluation and Grouping]
+1. **Each of the 75 evaluation cases in STEP7 must be implemented as a fully hardcoded if-block or eval block.**
+2. **Cases with the same title_key are grouped as one “page”; results are displayed in parallel on that page.**
+3. For each case:
+    - Independently evaluate against the user’s STEP6 selections.
+    - If one or more cases under a title_key match, output *all* of their results in parallel (sub-heading + output text).
+    - If none match, display the fallback guidance message only (“No matching case…”).
+4. **No for-loops, functions, or dynamic logic—everything must be hardcoded (no matter how verbose).**
+5. Output text, formatting, numbering, markdown, etc. must be printed exactly as in STEP7_ROWS (no change allowed).
+
+[Example Workflow]
+- If there are 7 cases with title_key 's2_2', and user input matches 2, display both results as parallel blocks.
+- If none match for 's2_2', display only the guidance message.
+
+[STEP8 Details: Official Form PDF Generation]
+1. For each title_key with results, generate a PDF page using the official template (provided Word/Excel/image).
+2. Page and table structure, field names, cell positions, line breaks, etc. must be **100% identical** to the template.
+3. Insert STEP7/6 output (application type, documents, conditions, etc.) exactly as output (no changes, translations, or formatting differences).
+    - Applicant and manual fields remain blank.
+    - Table borders, widths, fonts, colors, and line breaks must match template 1:1.
+4. Implement PDF download/print buttons; PDF must be read-only.
+
+[Error/Exception Handling]
+- If none of the cases under a title_key match, display only the default guidance message.
+
+[Critical Notes]
+- No refactoring, dynamic code, or extra features outside this scope.
+- Absolutely NO change (add, omit, alter) to output text, table structure, or logic.
+- If unclear, clarify before proceeding.
+
+[References]
+- step1_to_7 (4).py: full code and logic
+- step7_data_refac.xlsx: all original conditions and output text
+- STEP8 Word/Excel/image: PDF layout and fields for strict matching
