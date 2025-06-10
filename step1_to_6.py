@@ -1,4 +1,12 @@
 import streamlit as st
+import os
+import base64
+import datetime
+from io import BytesIO
+
+from docx import Document
+from docx2pdf import convert
+import openpyxl
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
