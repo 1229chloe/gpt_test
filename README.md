@@ -232,3 +232,13 @@ Output fields must follow the structure defined in the filled version of the tem
 - step1_to_6.py: full code and logic
 - step7_data_refac.xlsx: all original conditions and output text
 - STEP8 Word/Excel/image: PDF layout and fields for strict matching
+
+[Installation]
+To run the Streamlit app locally, install the required Python packages:
+```bash
+pip install streamlit python-docx docx2pdf
+```
+You may also install them using the provided `requirements.txt` file:
+```bash
+pip install -r requirements.txt
+```
