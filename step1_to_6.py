@@ -1,12 +1,9 @@
 import streamlit as st
-import os
 import base64
 import datetime
-from io import BytesIO
 
 from docx import Document
 from docx2pdf import convert
-import openpyxl
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
@@ -777,6 +774,7 @@ if st.session_state.step == 8:
                 f"신청양식_{title_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf"
             )
             convert(temp_docx, pdf_name)
+            os.remove(temp_docx)
 
             with open(pdf_name, "rb") as f:
                 pdf_data = f.read()
