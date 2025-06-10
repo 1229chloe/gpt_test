@@ -718,83 +718,6 @@ if st.session_state.step == 6:
             else:
                 st.button("다음항목 선택하기", on_click=go_to_next_step6_page)
 
-# ===== Step8: 신청양식 PDF 생성 =====
-if st.session_state.step == 8:
-    st.markdown("## Step 8")
-
-    step7_results = st.session_state.get("step7_results", {})
-
-    if not step7_results:
-        st.write("신청양식 자동생성 불가: 도출 결과 없음")
-    else:
-        for title_key, result_blocks in step7_results.items():
-            title_text = step6_items.get(title_key, {}).get("title", "")
-
-            if not result_blocks:
-                continue
-
-            output_1_text = result_blocks[0][1]
-            output_2_text = result_blocks[0][2]
-
-            doc = Document("제조방법변경 신청양식_empty.docx")
-            table = doc.tables[0]
-
-            first_line = output_1_text.splitlines()[0] if output_1_text else ""
-
-            for col in range(2):
-                table.cell(4, col).text = title_text
-            for col in range(2, 5):
-                table.cell(4, col).text = first_line
-
-            reqs = step6_items.get(title_key, {}).get("requirements", {})
-            for idx, (req_key, req_text) in enumerate(reqs.items()):
-                row = 6 + idx
-                if row > 10:
-                    break
-                for col in range(3):
-                    table.cell(row, col).text = req_text
-                state = st.session_state.step6_selections.get(
-                    f"{title_key}_req_{req_key}", ""
-                )
-                symbol = "○" if state == "충족" else "×" if state == "미충족" else ""
-                for col in (3, 4):
-                    table.cell(row, col).text = symbol
-
-            doc_lines = [line for line in output_2_text.splitlines() if line.strip()]
-            for idx, line in enumerate(doc_lines):
-                row = 12 + idx
-                if row >= len(table.rows):
-                    break
-                for col in range(3):
-                    table.cell(row, col).text = line
-
-            temp_docx = f"신청양식_{title_key}.docx"
-            doc.save(temp_docx)
-            pdf_name = (
-                f"신청양식_{title_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf"
-            )
-            convert(temp_docx, pdf_name)
-            os.remove(temp_docx)
-
-            with open(pdf_name, "rb") as f:
-                pdf_data = f.read()
-            b64 = base64.b64encode(pdf_data).decode("utf-8")
-            st.markdown(
-                f'<iframe src="data:application/pdf;base64,{b64}" ' +
-                'width="700" height="1000" type="application/pdf"></iframe>',
-                unsafe_allow_html=True,
-            )
-
-            col1, col2 = st.columns(2)
-            with col1:
-                st.download_button("파일 다운로드하기", pdf_data, file_name=pdf_name)
-            with col2:
-                if st.button("인쇄하기", key=f"print_{title_key}"):
-                    st.markdown(
-                        "<script>window.print();</script>",
-                        unsafe_allow_html=True,
-                    )
-
 # ===== Step7 상수 정의 =====
 STEP7_ROWS = [
     {
@@ -1443,3 +1366,80 @@ if st.session_state.step == 7:
             st.button("신청양식 확인하기", on_click=go_to_step8)
         else:
             st.button("다음단계로", on_click=go_next_step7_page)
+
+# ===== Step8: 신청양식 PDF 생성 =====
+if st.session_state.step == 8:
+    st.markdown("## Step 8")
+
+    step7_results = st.session_state.get("step7_results", {})
+
+    if not step7_results:
+        st.write("신청양식 자동생성 불가: 도출 결과 없음")
+    else:
+        for title_key, result_blocks in step7_results.items():
+            title_text = step6_items.get(title_key, {}).get("title", "")
+
+            if not result_blocks:
+                continue
+
+            output_1_text = result_blocks[0][1]
+            output_2_text = result_blocks[0][2]
+
+            doc = Document("제조방법변경 신청양식_empty.docx")
+            table = doc.tables[0]
+
+            first_line = output_1_text.splitlines()[0] if output_1_text else ""
+
+            for col in range(2):
+                table.cell(4, col).text = title_text
+            for col in range(2, 5):
+                table.cell(4, col).text = first_line
+
+            reqs = step6_items.get(title_key, {}).get("requirements", {})
+            for idx, (req_key, req_text) in enumerate(reqs.items()):
+                row = 6 + idx
+                if row > 10:
+                    break
+                for col in range(3):
+                    table.cell(row, col).text = req_text
+                state = st.session_state.step6_selections.get(
+                    f"{title_key}_req_{req_key}", ""
+                )
+                symbol = "○" if state == "충족" else "×" if state == "미충족" else ""
+                for col in (3, 4):
+                    table.cell(row, col).text = symbol
+
+            doc_lines = [line for line in output_2_text.splitlines() if line.strip()]
+            for idx, line in enumerate(doc_lines):
+                row = 12 + idx
+                if row >= len(table.rows):
+                    break
+                for col in range(3):
+                    table.cell(row, col).text = line
+
+            temp_docx = f"신청양식_{title_key}.docx"
+            doc.save(temp_docx)
+            pdf_name = (
+                f"신청양식_{title_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf"
+            )
+            convert(temp_docx, pdf_name)
+            os.remove(temp_docx)
+
+            with open(pdf_name, "rb") as f:
+                pdf_data = f.read()
+            b64 = base64.b64encode(pdf_data).decode("utf-8")
+            st.markdown(
+                f'<iframe src="data:application/pdf;base64,{b64}" '
+                'width="700" height="1000" type="application/pdf"></iframe>',
+                unsafe_allow_html=True,
+            )
+
+            col1, col2 = st.columns(2)
+            with col1:
+                st.download_button("파일 다운로드하기", pdf_data, file_name=pdf_name)
+            with col2:
+                if st.button("인쇄하기", key=f"print_{title_key}"):
+                    st.markdown(
+                        "<script>window.print();</script>",
+                        unsafe_allow_html=True,
+                    )
