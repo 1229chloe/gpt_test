@@ -1,5 +1,5 @@
 📌[Declaration]
-This specification defines the instruction set for Codex to generate a fully hardcoded implementation of step7, which must be executed directly after step6 without modifying any existing data structure, variable, or session key used in step1_to_6.py.
+This specification defines the instruction set for Codex to generate a fully hardcoded implementation of step7, which must be executed directly after step6 without modifying any existing data structure, variable, or session key used in step1_to_8.py.
 
 The goal is to convert structured data and interpreted condition logic into deterministic, fully hardcoded code blocks without introducing any new variables or logic outside the provided scope.
 
@@ -9,7 +9,7 @@ The following reference files must be strictly used:
   Contains human-readable column values which describe conditions and expected outputs.  
   These values (e.g., subitem_met, requirements_met, requirements_unmet) are not executable logic themselves but must be **interpreted into if-condition logic by Codex**, based on actual user responses from step6.
 
-- `step1_to_6.py`:
+- `step1_to_8.py`:
   Defines the full implementation of steps 1 through 6 in Streamlit.
   In particular, the structure of `step6_items` and the state keys used in `st.session_state.step6_selections` must be preserved and reused exactly. Step 7 and Step 8 code must be appended to this file rather than placed in a new file.
 
@@ -35,7 +35,7 @@ This declaration precedes and governs all subsequent task instructions. Codex mu
 📌[Purpose of This Specification]
 The purpose of this document is to instruct Codex to generate a hardcoded implementation of step7 logic that is fully aligned with:
 
-1. The user selection states stored in `st.session_state.step6_selections` (as implemented in `step1_to_6.py`)
+1. The user selection states stored in `st.session_state.step6_selections` (as implemented in `step1_to_8.py`)
 2. The interpretable condition values provided in `step7_data_refac.xlsx`
 3. The exact key mapping declared in `step6_used_key_info.csv`
 
@@ -49,7 +49,7 @@ This specification serves as the complete reference for Codex to implement step7
 ──────────────────────────────────────── Step 7 Specification (Codex-ready) ────────────────────────────────────────
 NOTE – All identifiers, column names, and UI strings in Korean **must stay exactly as-is.**  
 This document contains **no executable code** – only the deterministic rules Codex must follow when it appends
-Step 7 and Step 8 logic after the existing `step1_to_6.py` file. Do not place this code in a new file.
+Step 7 and Step 8 logic after the existing `step1_to_8.py` file. Do not place this code in a new file.
 
 ───────────────────────────── 1. Fixed Data Sources ─────────────────────────────
 EXCEL_FILE  :  `step7_data_refac.xlsx`
