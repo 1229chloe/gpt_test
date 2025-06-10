@@ -771,6 +771,7 @@ if st.session_state.step == 8:
             temp_docx = f"신청양식_{title_key}.docx"
             doc.save(temp_docx)
             pdf_name = (
+            pdf_name = (
                 f"신청양식_{title_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf"
             )
             convert(temp_docx, pdf_name)
