@@ -1363,7 +1363,8 @@ if st.session_state.step == 7:
         st.session_state.step7_results[current_key] = visible_results
         for tag, output1, output2 in visible_results:
             st.markdown(output1, unsafe_allow_html=True)
-            st.markdown(output2, unsafe_allow_html=True)
+            st.text(output2)
+
     else:
         st.write(
             "해당 변경사항에 대한 충족조건을 고려하였을 때,\n"
