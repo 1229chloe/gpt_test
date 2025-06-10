@@ -1407,20 +1407,1131 @@ if st.session_state.step == 7:
 
     st.session_state.step7_results[current_key] = []
     matched = False
-    for row in STEP7_ROWS:
-        if row["title_key"] == current_key:
-            expr = row["output_condition_all_met"].lstrip("if ").rstrip(":")
-            try:
-                cond = eval(expr, {}, {"step6_selections": st.session_state.step6_selections})
-            except Exception:
-                cond = False
-            if cond:
-                matched = True
-                st.markdown(row["output_1_text"], unsafe_allow_html=True)
-                st.markdown(row["output_2_text"], unsafe_allow_html=True)
-                st.session_state.step7_results[current_key].append(
-                    (row["output_1_tag"], row["output_1_text"], row["output_2_text"])
-                )
+    row = STEP7_ROWS[0]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip("if ").rstrip(":")
+        try:
+            cond = eval(expr, {}, {"step6_selections": st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row["output_1_text"], unsafe_allow_html=True)
+            st.markdown(row["output_2_text"], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row["output_1_tag"], row["output_1_text"], row["output_2_text"])
+            )
+    row = STEP7_ROWS[1]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip("if ").rstrip(":")
+        try:
+            cond = eval(expr, {}, {"step6_selections": st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row["output_1_text"], unsafe_allow_html=True)
+            st.markdown(row["output_2_text"], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row["output_1_tag"], row["output_1_text"], row["output_2_text"])
+            )
+
+    row = STEP7_ROWS[2]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[3]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[4]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[5]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[6]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[7]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[8]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[9]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[10]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[11]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[12]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[13]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[14]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[15]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[16]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[17]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[18]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[19]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[20]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[21]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[22]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[23]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[24]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[25]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[26]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[27]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[28]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[29]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[30]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[31]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[32]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[33]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[34]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[35]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[36]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[37]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[38]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[39]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[40]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[41]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[42]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[43]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[44]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[45]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[46]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[47]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[48]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[49]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[50]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[51]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[52]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[53]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[54]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[55]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[56]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[57]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[58]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[59]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[60]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[61]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[62]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[63]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[64]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[65]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[66]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[67]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[68]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[69]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[70]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[71]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[72]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[73]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+    row = STEP7_ROWS[74]
+    if row["title_key"] == current_key:
+        expr = row["output_condition_all_met"].lstrip('if ').rstrip(':')
+        try:
+            cond = eval(expr, {}, {'step6_selections': st.session_state.step6_selections})
+        except Exception:
+            cond = False
+        if cond:
+            matched = True
+            st.markdown(row['output_1_text'], unsafe_allow_html=True)
+            st.markdown(row['output_2_text'], unsafe_allow_html=True)
+            st.session_state.step7_results[current_key].append(
+                (row['output_1_tag'], row['output_1_text'], row['output_2_text'])
+            )
+
+
     if not matched:
         st.write(
             "해당 변경사항에 대한 충족조건을 고려하였을 때,\n"
