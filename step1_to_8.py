@@ -1428,11 +1428,12 @@ if st.session_state.step == 8:
         output_2_text = result_blocks[0][2] if result_blocks else ""
 
         template_path = TEMPLATE_PATH
-        if not os.path.exists(TEMPLATE_PATH):
+        if not os.path.exists(template_path):
             st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")
             st.stop()
         try:
-            doc = Document(str(template_path))
+            with open(template_path, "rb") as f:
+                doc = Document(f)
         except PackageNotFoundError:
             st.error("템플릿 파일을 열 수 없습니다: 제조방법변경 신청양식_empty_.docx")
             st.stop()
@@ -1500,7 +1501,7 @@ if st.session_state.step == 8:
             buffer.close()
             return pdf_bytes
 
-        pdf_content = _doc_to_pdf(Document(doc_bytes))
+        pdf_content = _doc_to_pdf(doc)
 
         col1, col2 = st.columns(2)
         with col1:
