@@ -17,6 +17,11 @@ TEMPLATE_PATH = os.path.join(BASE_DIR, "제조방법변경 신청양식_empty_.d
 from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+font_path = Path(__file__).resolve().parent / "fonts" / "NotoSansKR-Regular.ttf"
+pdfmetrics.registerFont(TTFont("NotoSansKR", str(font_path)))
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
@@ -1476,6 +1481,7 @@ if st.session_state.step == 8:
         def _doc_to_pdf(document):
             buffer = BytesIO()
             c = canvas.Canvas(buffer, pagesize=A4)
+            c.setFont("NotoSansKR", 10)
             width, height = A4
             margin = 40
             y = height - margin
