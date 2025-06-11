@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_PATH = os.path.join(BASE_DIR, "제조방법변경 신청양식_empty_.docx")
 
-from pathlib import Path
+from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
