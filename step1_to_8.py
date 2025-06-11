@@ -4,11 +4,11 @@ import datetime
 import os
 
 from docx import Document
+from docx.opc.exceptions import PackageNotFoundError
 from pathlib import Path
 import subprocess
 
 BASE_DIR = Path(__file__).resolve().parent
-␊
 
 # step1_to_8.py가 있는 폴더 기준으로 템플릿 경로 지정
 BASE_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -1429,10 +1429,14 @@ if st.session_state.step == 8:
 
         template_path = TEMPLATE_PATH
         if not os.path.exists(TEMPLATE_PATH):
-            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")␊
-            st.stop()␊
-␊
-        doc = Document(str(template_path))␊
+            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")
+            st.stop()
+        try:
+            doc = Document(str(template_path))
+        except PackageNotFoundError:
+            st.error("템플릿 파일을 열 수 없습니다: 제조방법변경 신청양식_empty_.docx")
+            st.stop()
+
         table = doc.tables[0]
 
         first_line = output_1_text.splitlines()[0] if output_1_text else ""
