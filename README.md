@@ -130,6 +130,8 @@ HTML→pdf 방식 활용 python-docx 단독 처리
 	•	PDF 변환이 필요하면 Streamlit 내장(print-to-pdf, HTML2PDF 등) 사용
 	•	브라우저 print는 window.print() 등 표준 print로 직접 연결
 	•	Step 8에서 PDF 생성을 위해 reportlab 라이브러리를 사용합니다. requirements.txt에 명시된 reportlab을 설치해야 합니다.
+        •       한글 PDF 출력을 위해 `fonts/NotoSansKR-Regular.ttf` 폰트 파일이 함께 제공됩니다.
+
 ⸻
 
 ■ 6. 예외 처리 및 유의사항
