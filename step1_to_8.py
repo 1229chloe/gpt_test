@@ -8,6 +8,11 @@ import subprocess
 
 BASE_DIR = Path(__file__).resolve().parent
 
+# ===== 템플릿 경로 확인 =====
+template_path = BASE_DIR / "제조방법변경 신청양식_empty_.docx"
+if not template_path.exists():
+    st.error(f"Template file not found: {template_path}")
+    st.stop()
 from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
@@ -22,9 +27,13 @@ from reportlab.platypus import (
     Spacer,
 )
 
-pdfmetrics.registerFont(
-    TTFont("NotoSansKR", Path("fonts/NotoSansKR-Regular.ttf"))
-)
+font_path = BASE_DIR / "fonts" / "NotoSansKR-Regular.ttf"
+if font_path.exists():
+    pdfmetrics.registerFont(TTFont("NotoSansKR", font_path))
+    KOREAN_FONT = "NotoSansKR"
+else:
+    st.error(f"Font file not found: {font_path}. Using default fonts.")
+    KOREAN_FONT = "Helvetica"
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
@@ -1448,7 +1457,7 @@ if st.session_state.step == 8:
         req_table.setStyle(
             TableStyle(
                 [
-                    ("FONTNAME", (0, 0), (-1, -1), "NotoSansKR"),
+                    ("FONTNAME", (0, 0), (-1, -1), KOREAN_FONT),
                     ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.black),
                     ("BOX", (0, 0), (-1, -1), 0.25, colors.black),
                 ]
@@ -1473,7 +1482,7 @@ if st.session_state.step == 8:
         doc_table.setStyle(
             TableStyle(
                 [
-                    ("FONTNAME", (0, 0), (-1, -1), "NotoSansKR"),
+                    ("FONTNAME", (0, 0), (-1, -1), KOREAN_FONT),
                     ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.black),
                     ("BOX", (0, 0), (-1, -1), 0.25, colors.black),
                 ]
@@ -1485,7 +1494,7 @@ if st.session_state.step == 8:
         styles = getSampleStyleSheet()
         styles.add(
             ParagraphStyle(
-                name="Korean", fontName="NotoSansKR", fontSize=12, leading=15
+                name="Korean", fontName=KOREAN_FONT, fontSize=12, leading=15
             )
         )
 
