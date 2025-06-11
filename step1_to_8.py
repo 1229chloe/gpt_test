@@ -18,10 +18,15 @@ from io import BytesIO
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.pdfbase.ttfonts import TTFont, TTFError
 
 font_path = Path(__file__).resolve().parent / "fonts" / "NotoSansKR-Regular.ttf"
-pdfmetrics.registerFont(TTFont("NotoSansKR", str(font_path)))
+try:
+    pdfmetrics.registerFont(TTFont("NotoSansKR", str(font_path)))
+except (TTFError, FileNotFoundError):
+    st.warning(
+        f"NotoSansKR font could not be loaded from {font_path}. Using default font."
+    )
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
