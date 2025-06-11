@@ -4,6 +4,7 @@ import datetime
 
 from docx import Document
 from io import BytesIO
+from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 
@@ -1416,7 +1417,12 @@ if st.session_state.step == 8:
         output_1_text = result_blocks[0][1] if result_blocks else ""
         output_2_text = result_blocks[0][2] if result_blocks else ""
 
-        doc = Document("제조방법변경 신청양식_empty_.docx")
+        template_path = Path(__file__).resolve().parent / "제조방법변경 신청양식_empty_.docx"
+        if not template_path.exists():
+            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")
+            st.stop()
+
+        doc = Document(str(template_path))
         table = doc.tables[0]
 
         first_line = output_1_text.splitlines()[0] if output_1_text else ""
