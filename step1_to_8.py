@@ -1486,13 +1486,17 @@ if st.session_state.step == 8:
         def _doc_to_pdf(document):
             buffer = BytesIO()
             c = canvas.Canvas(buffer, pagesize=A4)
-            c.setFont("NotoSansKR", 10)
+            pdfmetrics.registerFont(
+                TTFont("NotoSansKR", "fonts/NotoSansKR-Regular.ttf")
+            )
+            c.setFont("NotoSansKR", 12)
             width, height = A4
             margin = 40
             y = height - margin
             for para in document.paragraphs:
                 text = para.text.strip()
                 if text:
+                    c.setFont("NotoSansKR", 12)
                     c.drawString(margin, y, text)
                     y -= 14
                     if y < margin:
@@ -1502,6 +1506,7 @@ if st.session_state.step == 8:
                 for row in tbl.rows:
                     row_text = " | ".join(cell.text.strip() for cell in row.cells)
                     if row_text.strip():
+                        c.setFont("NotoSansKR", 12)
                         c.drawString(margin, y, row_text)
                         y -= 14
                         if y < margin:
