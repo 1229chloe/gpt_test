@@ -1,32 +1,33 @@
++102
+-110
+
 import streamlit as st
 import base64
 import datetime
 import os
 
-from docx import Document
-from docx.opc.exceptions import PackageNotFoundError
 from pathlib import Path
 import subprocess
 
 BASE_DIR = Path(__file__).resolve().parent
 
-# step1_to_8.py가 있는 폴더 기준으로 템플릿 경로 지정
-BASE_DIR = os.path.dirname(os.path.realpath(__file__))
-TEMPLATE_PATH = os.path.join(BASE_DIR, "제조방법변경 신청양식_empty_.docx")
-
 from io import BytesIO
 from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont, TTFError
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import (
+    SimpleDocTemplate,
+    Paragraph,
+    Table,
+    TableStyle,
+    Spacer,
+)
 
-font_path = Path(__file__).resolve().parent / "fonts" / "NotoSansKR-Regular.ttf"
-try:
-    pdfmetrics.registerFont(TTFont("NotoSansKR", str(font_path)))
-except (TTFError, FileNotFoundError):
-    st.warning(
-        f"NotoSansKR font could not be loaded from {font_path}. Using default font."
-    )
+pdfmetrics.registerFont(
+    TTFont("NotoSansKR", Path("fonts/NotoSansKR-Regular.ttf"))
+)
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
@@ -1434,90 +1435,84 @@ if st.session_state.step == 8:
         result_blocks = step7_results.get(current_key, [])
         title_text = step6_items.get(current_key, {}).get("title", "")
 
-        output_1_text = result_blocks[0][1] if result_blocks else ""
         output_2_text = result_blocks[0][2] if result_blocks else ""
 
-        template_path = TEMPLATE_PATH
-        if not os.path.exists(template_path):
-            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")
-            st.stop()
-        try:
-            with open(template_path, "rb") as f:
-                doc = Document(f)
-        except PackageNotFoundError:
-            st.error("템플릿 파일을 열 수 없습니다: 제조방법변경 신청양식_empty_.docx")
-            st.stop()
-
-        table = doc.tables[0]
-
-        first_line = output_1_text.splitlines()[0] if output_1_text else ""
-
-        for col in range(2):
-            table.cell(4, col).text = title_text
-        for col in range(2, 5):
-            table.cell(4, col).text = first_line
-
         reqs = step6_items.get(current_key, {}).get("requirements", {})
-        for idx, (req_key, req_text) in enumerate(reqs.items()):
-            row = 6 + idx
-            if row > 10:
-                break
-            for col in range(3):
-                table.cell(row, col).text = req_text
+
+        req_table_data = [["조건", "충족여부"]]
+        for req_key, req_text in reqs.items():
             state = st.session_state.step6_selections.get(
                 f"{current_key}_req_{req_key}", ""
             )
             symbol = "○" if state == "충족" else "×" if state == "미충족" else ""
-            for col in (3, 4):
-                table.cell(row, col).text = symbol
+            req_table_data.append([req_text, symbol])
 
-        doc_lines = [line for line in output_2_text.splitlines() if line.strip()]
-        for idx, line in enumerate(doc_lines):
-            row = 12 + idx
-            if row >= len(table.rows):
-                break
-            for col in range(3):
-                table.cell(row, col).text = line
-
-        doc_bytes = BytesIO()
-        doc.save(doc_bytes)
-        doc_bytes.seek(0)
-
-        def _doc_to_pdf(document):
-            buffer = BytesIO()
-            c = canvas.Canvas(buffer, pagesize=A4)
-            pdfmetrics.registerFont(
-                TTFont("NotoSansKR", "fonts/NotoSansKR-Regular.ttf")
+        req_table = Table(req_table_data, colWidths=[350, 50])
+        req_table.setStyle(
+            TableStyle(
+                [
+                    ("FONTNAME", (0, 0), (-1, -1), "NotoSansKR"),
+                    ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.black),
+                    ("BOX", (0, 0), (-1, -1), 0.25, colors.black),
+                ]
             )
-            c.setFont("NotoSansKR", 12)
-            width, height = A4
-            margin = 40
-            y = height - margin
-            for para in document.paragraphs:
-                text = para.text.strip()
-                if text:
-                    c.setFont("NotoSansKR", 12)
-                    c.drawString(margin, y, text)
-                    y -= 14
-                    if y < margin:
-                        c.showPage()
-                        y = height - margin
-            for tbl in document.tables:
-                for row in tbl.rows:
-                    row_text = " | ".join(cell.text.strip() for cell in row.cells)
-                    if row_text.strip():
-                        c.setFont("NotoSansKR", 12)
-                        c.drawString(margin, y, row_text)
-                        y -= 14
-                        if y < margin:
-                            c.showPage()
-                            y = height - margin
-            c.save()
-            pdf_bytes = buffer.getvalue()
-            buffer.close()
-            return pdf_bytes
+        )
 
-        pdf_content = _doc_to_pdf(doc)
+        doc_lines = []
+        if output_2_text:
+            lines = output_2_text.splitlines()
+            start = 0
+            for i, l in enumerate(lines):
+                if "필요서류" in l:
+                    start = i + 1
+                    break
+            doc_lines = [line.strip() for line in lines[start:] if line.strip()]
+
+        doc_table_data = [["필요서류"]]
+        for line in doc_lines:
+            doc_table_data.append([line])
+
+        doc_table = Table(doc_table_data, colWidths=[400])
+        doc_table.setStyle(
+            TableStyle(
+                [
+                    ("FONTNAME", (0, 0), (-1, -1), "NotoSansKR"),
+                    ("INNERGRID", (0, 0), (-1, -1), 0.25, colors.black),
+                    ("BOX", (0, 0), (-1, -1), 0.25, colors.black),
+                ]
+            )
+        )
+
+        buffer = BytesIO()
+        doc = SimpleDocTemplate(buffer, pagesize=A4)
+        styles = getSampleStyleSheet()
+        styles.add(
+            ParagraphStyle(
+                name="Korean", fontName="NotoSansKR", fontSize=12, leading=15
+            )
+        )
+
+        elements = [
+            Paragraph(f"변경유형: {title_text.replace('\n', '<br/>')}", styles["Korean"]),
+            Spacer(1, 12),
+            Paragraph(f"신청유형: {result_blocks[0][0] if result_blocks else ''}", styles["Korean"]),
+            Spacer(1, 12),
+            Paragraph("충족조건", styles["Korean"]),
+            req_table,
+            Spacer(1, 12),
+            Paragraph("필요서류", styles["Korean"]),
+            doc_table,
+        ]
+
+        doc.build(elements)
+        pdf_content = buffer.getvalue()
+        buffer.close()
+
+        b64 = base64.b64encode(pdf_content).decode("utf-8")
+        st.markdown(
+            f'<iframe src="data:application/pdf;base64,{b64}" width="700" height="900" type="application/pdf"></iframe>',
+            unsafe_allow_html=True,
+        )
 
         col1, col2 = st.columns(2)
         with col1:
