@@ -3,7 +3,9 @@ import base64
 import datetime
 
 from docx import Document
-from docx2pdf import convert
+from io import BytesIO
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
 
 # ===== 초기 상태 정의 =====
 if "step" not in st.session_state:
@@ -614,6 +616,8 @@ if "step7_page" not in st.session_state:
     st.session_state.step7_page = 0
 if "step7_results" not in st.session_state:
     st.session_state.step7_results = {}
+if "step8_page" not in st.session_state:
+    st.session_state.step8_page = 0
 
 def go_to_prev_step6_page():
     if st.session_state.step6_page > 0:
@@ -634,7 +638,20 @@ def go_next_step7_page():
         st.session_state.step7_page += 1
 
 def go_to_step8():
+    st.session_state.step8_page = 0
     st.session_state.step = 8
+
+def go_prev_step8_page():
+    if st.session_state.step8_page > 0:
+        st.session_state.step8_page -= 1
+    else:
+        st.session_state.step = 7
+
+def go_next_step8_page():
+    step7_results = st.session_state.get("step7_results", {})
+    step8_keys = [k for k in st.session_state.step6_targets if step7_results.get(k)]
+    if st.session_state.step8_page < len(step8_keys) - 1:
+        st.session_state.step8_page += 1
 
 def go_back_to_step5():
     st.session_state.step = 5
@@ -1387,74 +1404,111 @@ if st.session_state.step == 8:
     st.markdown("## Step 8")
 
     step7_results = st.session_state.get("step7_results", {})
+    step8_keys = [k for k in st.session_state.step6_targets if step7_results.get(k)]
 
-    if not step7_results:
+    if not step8_keys:
         st.write("신청양식 자동생성 불가: 도출 결과 없음")
     else:
-        for title_key, result_blocks in step7_results.items():
-            title_text = step6_items.get(title_key, {}).get("title", "")
+        current_key = step8_keys[st.session_state.step8_page]
+        result_blocks = step7_results.get(current_key, [])
+        title_text = step6_items.get(current_key, {}).get("title", "")
 
-            if not result_blocks:
-                continue
+        output_1_text = result_blocks[0][1] if result_blocks else ""
+        output_2_text = result_blocks[0][2] if result_blocks else ""
 
-            output_1_text = result_blocks[0][1]
-            output_2_text = result_blocks[0][2]
+        doc = Document("제조방법변경 신청양식_empty_.docx")
+        table = doc.tables[0]
 
-            doc = Document("제조방법변경 신청양식_empty.docx")
-            table = doc.tables[0]
+        first_line = output_1_text.splitlines()[0] if output_1_text else ""
 
-            first_line = output_1_text.splitlines()[0] if output_1_text else ""
+        for col in range(2):
+            table.cell(4, col).text = title_text
+        for col in range(2, 5):
+            table.cell(4, col).text = first_line
 
-            for col in range(2):
-                table.cell(4, col).text = title_text
-            for col in range(2, 5):
-                table.cell(4, col).text = first_line
+        reqs = step6_items.get(current_key, {}).get("requirements", {})
+        for idx, (req_key, req_text) in enumerate(reqs.items()):
+            row = 6 + idx
+            if row > 10:
+                break
+            for col in range(3):
+                table.cell(row, col).text = req_text
+            state = st.session_state.step6_selections.get(
+                f"{current_key}_req_{req_key}", ""
+            )
+            symbol = "○" if state == "충족" else "×" if state == "미충족" else ""
+            for col in (3, 4):
+                table.cell(row, col).text = symbol
 
-            reqs = step6_items.get(title_key, {}).get("requirements", {})
-            for idx, (req_key, req_text) in enumerate(reqs.items()):
-                row = 6 + idx
-                if row > 10:
-                    break
-                for col in range(3):
-                    table.cell(row, col).text = req_text
-                state = st.session_state.step6_selections.get(
-                    f"{title_key}_req_{req_key}", ""
+        doc_lines = [line for line in output_2_text.splitlines() if line.strip()]
+        for idx, line in enumerate(doc_lines):
+            row = 12 + idx
+            if row >= len(table.rows):
+                break
+            for col in range(3):
+                table.cell(row, col).text = line
+
+        pdf_data = BytesIO()
+        doc_bytes = BytesIO()
+        doc.save(doc_bytes)
+        doc_bytes.seek(0)
+
+        def _doc_to_pdf(document):
+            buffer = BytesIO()
+            c = canvas.Canvas(buffer, pagesize=A4)
+            width, height = A4
+            margin = 40
+            y = height - margin
+            for para in document.paragraphs:
+                text = para.text.strip()
+                if text:
+                    c.drawString(margin, y, text)
+                    y -= 14
+                    if y < margin:
+                        c.showPage()
+                        y = height - margin
+            for tbl in document.tables:
+                for row in tbl.rows:
+                    row_text = " | ".join(cell.text.strip() for cell in row.cells)
+                    if row_text.strip():
+                        c.drawString(margin, y, row_text)
+                        y -= 14
+                        if y < margin:
+                            c.showPage()
+                            y = height - margin
+            c.save()
+            pdf_bytes = buffer.getvalue()
+            buffer.close()
+            return pdf_bytes
+
+        pdf_content = _doc_to_pdf(Document(doc_bytes))
+        b64 = base64.b64encode(pdf_content).decode("utf-8")
+        st.markdown(
+            f'<iframe src="data:application/pdf;base64,{b64}" '
+            'width="700" height="1000" type="application/pdf"></iframe>',
+            unsafe_allow_html=True,
+        )
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.download_button(
+                "PDF 저장하기",
+                pdf_content,
+                file_name=f"신청양식_{current_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf",
+            )
+        with col2:
+            if st.button("인쇄하기", key=f"print_{current_key}"):
+                st.markdown(
+                    "<script>window.print();</script>",
+                    unsafe_allow_html=True,
                 )
-                symbol = "○" if state == "충족" else "×" if state == "미충족" else ""
-                for col in (3, 4):
-                    table.cell(row, col).text = symbol
 
-            doc_lines = [line for line in output_2_text.splitlines() if line.strip()]
-            for idx, line in enumerate(doc_lines):
-                row = 12 + idx
-                if row >= len(table.rows):
-                    break
-                for col in range(3):
-                    table.cell(row, col).text = line
-
-            temp_docx = f"신청양식_{title_key}.docx"
-            doc.save(temp_docx)
-            pdf_name = (
-                f"신청양식_{title_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf"
+        col_prev, col_next = st.columns(2)
+        with col_prev:
+            st.button("이전단계로", on_click=go_prev_step8_page)
+        with col_next:
+            st.button(
+                "다음단계로",
+                on_click=go_next_step8_page,
+                disabled=st.session_state.step8_page == len(step8_keys) - 1,
             )
-            convert(temp_docx, pdf_name)
-            os.remove(temp_docx)
-
-            with open(pdf_name, "rb") as f:
-                pdf_data = f.read()
-            b64 = base64.b64encode(pdf_data).decode("utf-8")
-            st.markdown(
-                f'<iframe src="data:application/pdf;base64,{b64}" '
-                'width="700" height="1000" type="application/pdf"></iframe>',
-                unsafe_allow_html=True,
-            )
-
-            col1, col2 = st.columns(2)
-            with col1:
-                st.download_button("파일 다운로드하기", pdf_data, file_name=pdf_name)
-            with col2:
-                if st.button("인쇄하기", key=f"print_{title_key}"):
-                    st.markdown(
-                        "<script>window.print();</script>",
-                        unsafe_allow_html=True,
-                    )
