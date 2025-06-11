@@ -1,9 +1,19 @@
 import streamlit as st
 import base64
 import datetime
+import os
 
 from docx import Document
-from io import BytesIO
+from pathlib import Path
+import subprocess
+
+BASE_DIR = Path(__file__).resolve().parent
+␊
+
+# step1_to_8.py가 있는 폴더 기준으로 템플릿 경로 지정
+BASE_DIR = os.path.dirname(os.path.realpath(__file__))
+TEMPLATE_PATH = os.path.join(BASE_DIR, "제조방법변경 신청양식_empty_.docx")
+
 from pathlib import Path
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
@@ -1417,12 +1427,12 @@ if st.session_state.step == 8:
         output_1_text = result_blocks[0][1] if result_blocks else ""
         output_2_text = result_blocks[0][2] if result_blocks else ""
 
-        template_path = Path(__file__).resolve().parent / "제조방법변경 신청양식_empty_.docx"
-        if not template_path.exists():
-            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")
-            st.stop()
-
-        doc = Document(str(template_path))
+        template_path = TEMPLATE_PATH
+        if not os.path.exists(TEMPLATE_PATH):
+            st.error("템플릿 파일을 찾을 수 없습니다: 제조방법변경 신청양식_empty_.docx")␊
+            st.stop()␊
+␊
+        doc = Document(str(template_path))␊
         table = doc.tables[0]
 
         first_line = output_1_text.splitlines()[0] if output_1_text else ""
@@ -1454,7 +1464,6 @@ if st.session_state.step == 8:
             for col in range(3):
                 table.cell(row, col).text = line
 
-        pdf_data = BytesIO()
         doc_bytes = BytesIO()
         doc.save(doc_bytes)
         doc_bytes.seek(0)
@@ -1488,19 +1497,14 @@ if st.session_state.step == 8:
             return pdf_bytes
 
         pdf_content = _doc_to_pdf(Document(doc_bytes))
-        b64 = base64.b64encode(pdf_content).decode("utf-8")
-        st.markdown(
-            f'<iframe src="data:application/pdf;base64,{b64}" '
-            'width="700" height="1000" type="application/pdf"></iframe>',
-            unsafe_allow_html=True,
-        )
 
         col1, col2 = st.columns(2)
         with col1:
             st.download_button(
-                "PDF 저장하기",
-                pdf_content,
-                file_name=f"신청양식_{current_key}_{datetime.date.today().strftime('%Y%m%d')}.pdf",
+                label="📄 신청양식 PDF 다운로드",
+                data=pdf_content,
+                file_name="제조방법변경_신청양식.pdf",
+                mime="application/pdf",
             )
         with col2:
             if st.button("인쇄하기", key=f"print_{current_key}"):
